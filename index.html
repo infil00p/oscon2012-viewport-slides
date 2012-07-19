@@ -1,0 +1,255 @@
+<!doctype html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <title>Viewports: Designing for the Modern Web</title>
+    
+    <meta name="description" content="Viewports: Designing for the Modern Web">
+    <meta name="author" content="Joe Bowser">
+    <meta name="viewport" content="width=1024, user-scalable=no">
+    
+    <!-- Core and extension CSS files -->
+    <link rel="stylesheet" href="deckjs/core/deck.core.css">
+    <link rel="stylesheet" href="deckjs/extensions/goto/deck.goto.css">
+    <link rel="stylesheet" href="deckjs/extensions/menu/deck.menu.css">
+    <link rel="stylesheet" href="deckjs/extensions/navigation/deck.navigation.css">
+    <link rel="stylesheet" href="deckjs/extensions/status/deck.status.css">
+    <link rel="stylesheet" href="deckjs/extensions/hash/deck.hash.css">
+    
+    <!-- Style theme. More available in /themes/style/ or create your own. -->
+    <link rel="stylesheet" href="deckjs/themes/style/phonegap.css">
+    
+    <!-- Transition theme. More available in /themes/transition/ or create your own. -->
+    <link rel="stylesheet" href="deckjs/themes/transition/horizontal-slide.css">
+    
+    <script src="deckjs/modernizr.custom.js"></script>
+</head>
+
+<body class=deck-container>
+    
+    <section class=slide id=title-slide>
+        <br />
+        <img src="img/no_cell_phone.png" />
+        <h2 style="text-align: center; color: #000;" >Viewports: Designing for the <span style="text-decoration: line-through ">Mobile</span> Modern Web</h2>
+        <h3 style="text-align: center; color: #000;"> Joe Bowser <br />
+        <a href="mailto:jbowser@adobe.com">jbowser@adobe.com</a><br />
+        <a href="twitter.com/infil00p"> @infil00p</a></h3>
+    </section>
+
+    <section class=slide>
+        <style type="text/css" media="screen">
+            th { text-align: left }
+        </style>
+        <h2>The Modern Web</h2>
+        <img src="img/tablet_icon.png" />
+        <ul>
+            <li>The Mobile Web is just PART of the Web - You're not going to haul your TV down the street</li>
+            <li>Mobile does not mean just phones - I can take a Netbook or a Tablet with me</li>
+            <li>We should not make predictions about what devices people will use - (i.e. RIM still isn't dead)</li>
+            <li>Who knows how people will view the web five years from now?</li>
+        </ul>
+    </section>
+    
+    <section class=slide>
+        <style type="text/css" media="screen">
+            th { text-align: left }
+        </style>
+        <h2>The Problem</h2>
+        <div class="twopane">
+            <img src="img/mobile_guardian.png" style="position: absolute; left: 20px;"/>
+            <ul style="position: absolute; left: 520px" >
+                <li>Web sites are deferring to native applications which display the same content</li>
+                <li>Web applications (both PhoneGap and others) aren't gracefully dealing with multiple screen sizes</li>
+                <li>Some sites have hard-coded URLs which display the mobile site, which don't detect screen size when sharing</li>
+                <li>People still design for a single device or a single resolution and expect it to scale everywhere</li>
+            </ul>
+        </div>
+    </section>
+    <section class=slide>
+        <h2>What the problem used to be</h2>
+        <img style="position: absolute; left: 100px;" src="img/ResolutionGraphic.png" />
+        <ul style="position: absolute; left: 500px;">
+            <li>Mobile meant phones</li>
+            <li>The largest resolution were higher-end Android devices</li>
+            <li>iOS has a device-independent resolution</li>
+            <li>Android resolutions were more flexible</li>
+            <li>We roughly knew what pixels we were using</li>
+        </ul>
+    </section>
+    <section class="slide">
+        <h2> Lots of testing </h2>
+        <img src="img/brian_phones.jpg" />
+    </section>
+    <section class=slide>
+        <h2>What the problem is today</h2>
+        <img src="img/LargerResolutionGraphic.png" />
+    </section>
+    <section class="slide">
+        <h2>This is not a mobile web problem</h2>
+        <img src="img/pstam_moving_hdtv.jpg" />
+    </section>
+    <section class=slide>
+        <h2>How do we go about fixing this?</h2>
+        <ul>
+            <li>Multiple versions? - May or may not be feasible</li>
+            <li>CSS Media Queries? - Relies on assumptions about devices out in the wild</li>
+            <li>Multiple Web Assets</li>
+            <li>Viewport Meta Tag</li>
+            <li>Javascript APIs for detecting DPI</li>
+            <li>Test on multiple devices</li>
+            <li>There is no silver bullet for this</li>
+        </ul>
+    </section>
+   <section class="slide">
+        <img src="img/warning_large.png">
+        <h2 style="text-align: center">LIVE CODING AHEAD</h2>
+    </section>
+    <section class="slide">
+        <h2>Multiple Assets</h2>
+        <img src="img/scale.png" />
+        <ul>
+            <li>Needed for performance</li>
+            <li>Scaled Images make scrolling suck!</li>
+            <li>This isn't just a Web problem, native scrolling can suck too!</li>
+            <li>Downsampling images just makes things janky</li
+        </ul>
+    </section>
+    <section class=slide>
+        <h2>What about pixels?</h2>
+        <ul>
+            <li>Pixels aren't real measurements</li>
+            <li>CSS Pixels - pixels whose size is relative to scale</li>
+            <li>Device Independent Pixels - CSS Pixes at 100% zoom</li>
+            <li>Device Pixels - The actual pixels that you can't use</li>
+        </ul>
+        <img src="img/falling.png" />
+    </section>
+    <section class=slide>
+        <h2>Pixel Density: Tablet vs Phone</h2>
+        <img src="img/point.png" style="position: absolute; left: 100px;" />
+        <ul style="position: absolute; left: 400px;" >
+            <li>It's next to impossible to determine tablet or phone on pixels alone</li>
+            <li>Arbitrary pixel cut-offs are arbitrary</li>
+            <li>iOS will always report a pixel density of 2 for Retina Screens</li>
+            <li>Android pixels were once equal to device pixels, but will not be any longer</li>
+            <li>Use pixel cut-offs for orientation, or for device, or for both</li>
+            <li>Actual Device Width on Android is devicePixels/pixelDensityRatio</li>
+        </ul>
+    </section>
+    <section class="slide">
+        <h2>This is what it really looks like in CSS pixels</h2>
+        <img src="img/Stupid_Resolution_Graphic.png" />
+    </section>
+    <section class=slide>
+        <h2>The Viewport: Screen Width and Height</h2>
+        <ul>
+            <li>Setting device-width is fun times!</li>
+            <li>On many browsers, this will default to 320x480</li>
+            <li>density-dpi is being deprecated, although many Android apps use this</li>
+            <li>100% zoom doesn't mean you'll get real pixels</li>
+        </ul>
+        <pre>
+        &lt;meta name="viewport"
+            content="
+            <b>height</b> = [<em>pixel_value</em> | device-height] ,
+            <b>width</b> = [<em>pixel_value</em> | device-width ] ,
+            <b>initial-scale</b> = <em>float_value</em> ,
+            <b>minimum-scale</b> = <em>float_value</em> ,
+            <b>maximum-scale</b> = <em>float_value</em> ,
+            <b>user-scalable</b> = [yes | no] ,
+            <b>target-densitydpi</b> = [<em>dpi_value</em> | device-dpi |
+                               high-dpi | medium-dpi | low-dpi]
+          " /&gt;
+        </pre>
+   </section>
+   <section class=slide>
+        <h2>CSS media queries</h2>
+
+        Webkit based: 
+        <pre>
+            &lt;link rel="stylesheet" media="screen and (-webkit-device-pixel-ratio: 1.5)" href="hdpi.css" /&gt;
+            &lt;link rel="stylesheet" media="screen and (-webkit-device-pixel-ratio: 1.0)" href="mdpi.css" /&gt;
+            &lt;link rel="stylesheet" media="screen and (-webkit-device-pixel-ratio: 0.75)" href="ldpi.css" /&gt;
+        </pre>
+
+        Mozilla based:
+        <pre>
+            &lt;link rel="stylesheet" media="screen and (-moz-device-pixel-ratio: 1.5)" href="hdpi.css" /&gt;
+            &lt;link rel="stylesheet" media="screen and (-moz-device-pixel-ratio: 1.0)" href="mdpi.css" /&gt;
+            &lt;link rel="stylesheet" media="screen and (-moz-device-pixel-ratio: 0.75)" href="ldpi.css" /&gt;
+        </pre>
+    </section>
+    <section class=slide>
+        <h2>Or you can design for the web</h2>
+        <pre>
+            &lt;link rel="stylesheet" href="landscape.css" type="text/css" media="screen and (min-width: 1024px)" /&gt;
+            &lt;link rel="stylesheet" href="portrait.css" type="text/css" media="screen and (min-width: 1023px)" /&gt;
+        </pre>
+        <ul>
+            <li>Using browser-specific CSS isn't the web</li>
+            <li>This uses CSS pixels</li>
+            <li>This is good for when width=device-width with no max-device-width</li>
+            <li>This doesn't make sense for use with multiple versions</li>
+        </ul>
+    </section>
+    <section class=slide>
+        <h2>Javascript Detection</h2>
+        <img src="img/gears.png" />
+        <ul>
+            <li>Use this to determine pixel-density</li>
+            <li>Can be used to execute CSS media queries</li>
+            <li>Can be used with other APIs to determine type of device</li>
+            <li>Can also be used to change things that CSS can't change (i.e. img tags)</li>
+        </ul>
+    </section>
+    <section class=slide>
+        <h2>Conclusion</h2>
+        <img src="img/info.png" style="position: absolute; left: 50px;" />
+        <ul style="position: absolute; left: 300px; " >
+            <li>Multiple versions may save you from some of this headache, but only if you know how many pixels you have</li>
+            <li>This gets complicated when pixel density is brought into the picture</li>
+            <li>A mix of CSS Media Queries, Seperated Assets, and Javascript can help</li>
+            <li>Test on multiple devices</li>
+            <li>Don't give up</li>
+        </ul>
+    </section>
+
+    <section class=slide>
+        <h2>Resources</h2>
+        <ul>
+            <li><a href="http://developer.android.com/guide/webapps/targeting.html">Targeting Screens from Web Apps</a> - Android Open Source Project</li>
+            <li><a href="http://marakana.com/s/a_pixel_is_not_a_pixel_ppk_explains_viewports,1141/index.html">When a pixel is not a pixel</a> - Peter-Paul Koch - <a href="http://quirksmode.org">http://quirksmode.org</a></li>
+            <li><a href="https://developers.google.com/events/io/sessions/gooio2012/206/">Fast UIs for the Cross-Device Web</a> - Boris Smus, Google</li>
+        </ul>
+        <h3>Source</h3>
+        <ul>
+            <li><a href="http://github.com/infil00p/oscon_demo">https://github.com/infil00p/oscon_demo</a> - Example of Media Queries and JS</li>
+        </ul>
+    </section>
+
+    <section class=slide>
+        <h2>Legal</h2>
+        <p>Portions of this presentation are modifications based on work created and 
+shared by the <a href="http://code.google.com/policies.html">Android Open Source Project</a> and 
+used according to terms described in the <a href="http://creativecommons.org/licenses/by/2.5/">Creative Commons 2.5 Attribution License.</a></p>
+        <p>Iconography courtesy of the Noun Project and covered under <a href="http://creativecommons.org/licences/by/3.0/">Creative Commons 3.0 Attribution Licence</a></p>
+        <p>Scale icon by __Lo</p>
+    </section>
+
+
+    <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+    <script>window.jQuery || document.write('<script src="/deckjs/jquery-1.7.min.js"><\/script>')</script>
+
+    <!-- Deck Core and extensions -->
+    <script src="deckjs/core/deck.core.js"></script>
+    <script src="deckjs/extensions/hash/deck.hash.js"></script>
+    <script src="deckjs/extensions/menu/deck.menu.js"></script>
+    <script src="deckjs/extensions/goto/deck.goto.js"></script>
+    <script src="deckjs/extensions/status/deck.status.js"></script>
+    <script src="deckjs/extensions/navigation/deck.navigation.js"></script>
+
+    <!-- Initialize the deck -->
+    <script>$(function() { $.deck('.slide') })</script>
+</body>
+</html>
